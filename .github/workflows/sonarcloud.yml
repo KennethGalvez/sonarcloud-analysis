@@ -28,15 +28,12 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Install SonarCloud Scanner
-        run: |
-          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-          unzip sonar-scanner-cli.zip
-          mv sonar-scanner-4.7.0.2747-linux sonar-scanner
-          export PATH="$PATH:${{ github.workspace }}/sonar-scanner/bin"
-
       - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.organization=kennethgalvez
+            -Dsonar.projectKey=KennethGalvez_sonarcloud-analysis
+            -Dsonar.sources=.
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner -Dsonar.organization=kennethgalvez -Dsonar.projectKey=KennethGalvez_sonarcloud-analysis -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
+          SONAR_TOKEN: ${{ secrets.739535988c6d8fa507f454c1b2b35c467e22c9b3 }}
