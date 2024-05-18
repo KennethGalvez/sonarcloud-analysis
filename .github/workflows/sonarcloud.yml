@@ -18,7 +18,7 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # Puedes cambiarlo por 'adopt', 'zulu', etc.
+          distribution: 'adopt' # Puede ser 'zulu', 'adopt', 'temurin', etc.
           java-version: '11'
 
       - name: Cache SonarCloud packages
@@ -30,9 +30,8 @@ jobs:
 
       - name: Install SonarCloud Scanner
         run: |
-          wget -O sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-          unzip sonar-scanner-cli.zip
-          export PATH="$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin"
+          wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip | bsdtar -xvf- -C /opt
+          export PATH="$PATH:/opt/sonar-scanner-4.6.2.2472-linux/bin"
 
       - name: SonarCloud Scan
         env:
