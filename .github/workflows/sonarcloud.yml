@@ -28,10 +28,13 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       - name: Install SonarCloud Scanner
-        run: |
-          wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip | bsdtar -xvf- -C /opt
-          export PATH="$PATH:/opt/sonar-scanner-4.6.2.2472-linux/bin"
+        run: npm install -g sonarqube-scanner
 
       - name: SonarCloud Scan
         env:
